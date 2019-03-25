@@ -1,3 +1,8 @@
+import photon from "photon";
+
+import resize from "../resize-image-url";
+import { MimeTypes } from "./constants";
+
 /**
  * Wrapper method for the HTML canvas toBlob() function. Polyfills if the
  * function does not exist
@@ -59,16 +64,16 @@ export function url(media, options) {
 
   options = options || {};
 
-  if (options.photon) {
-    if (options.maxWidth) {
-      return photon(media.URL, { width: options.maxWidth });
-    }
-    if (options.resize) {
-      return photon(media.URL, { resize: options.resize });
-    }
+  //   if (options.photon) {
+  //     if (options.maxWidth) {
+  //       return photon(media.URL, { width: options.maxWidth });
+  //     }
+  //     if (options.resize) {
+  //       return photon(media.URL, { resize: options.resize });
+  //     }
 
-    return photon(media.URL);
-  }
+  //     return photon(media.URL);
+  //   }
 
   if (media.thumbnails && options.size in media.thumbnails) {
     return media.thumbnails[options.size];
@@ -87,4 +92,84 @@ export function url(media, options) {
   }
 
   return media.URL;
+}
+
+/**
+ * Given a media string, File, or object, returns the file extension.
+ *
+ * @example
+ * getFileExtension( 'example.gif' );
+ * getFileExtension( { URL: 'https://wordpress.com/example.gif' } );
+ * getFileExtension( new window.File( [''], 'example.gif' ) );
+ * // All examples return 'gif'
+ *
+ * @param  {(string|File|Object)} media Media object or string
+ * @return {string}                     File extension
+ */
+export function getFileExtension(media) {
+  let extension;
+
+  if (!media) {
+    return;
+  }
+
+  const isString = "string" === typeof media;
+  const isFileObject = "File" in window && media instanceof window.File;
+
+  if (isString) {
+    let filePath;
+    if (isUri(media)) {
+      filePath = urlLib.parse(media).pathname;
+    } else {
+      filePath = media;
+    }
+
+    extension = path.extname(filePath).slice(1);
+  } else if (isFileObject) {
+    extension = path.extname(media.name).slice(1);
+  } else if (media.extension) {
+    extension = media.extension;
+  } else {
+    const pathname =
+      urlLib.parse(media.URL || media.file || media.guid || "").pathname || "";
+    extension = path.extname(pathname).slice(1);
+  }
+
+  return extension;
+}
+
+/**
+ * Given a media string, File, or object, returns the MIME type if one can
+ * be determined.
+ *
+ * @example
+ * getMimeType( 'example.gif' );
+ * getMimeType( { URL: 'https://wordpress.com/example.gif' } );
+ * getMimeType( { mime_type: 'image/gif' } );
+ * // All examples return 'image/gif'
+ *
+ * @param  {(string|File|Object)} media Media object or string
+ * @return {string}                     Mime type of the media, if known
+ */
+export function getMimeType(media) {
+  if (!media) {
+    return;
+  }
+
+  if (media.mime_type) {
+    return media.mime_type;
+  } else if ("File" in window && media instanceof window.File) {
+    return media.type;
+  }
+
+  let extension = getFileExtension(media);
+
+  if (!extension) {
+    return;
+  }
+
+  extension = extension.toLowerCase();
+  if (MimeTypes.hasOwnProperty(extension)) {
+    return MimeTypes[extension];
+  }
 }

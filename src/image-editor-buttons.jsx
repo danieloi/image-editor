@@ -13,11 +13,11 @@ import { localize } from 'i18n-calypso';
 /**
  * Internal dependencies
  */
-import Button from 'components/button';
+import Button from './components/button';
 import {
 	getImageEditorFileInfo,
 	imageEditorHasChanges,
-} from 'state/ui/editor/image-editor/selectors';
+} from './state/ui/editor/image-editor/selectors';
 
 class ImageEditorButtons extends Component {
 	static propTypes = {

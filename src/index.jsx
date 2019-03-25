@@ -16,26 +16,30 @@ import classNames from 'classnames';
 /**
  * Internal dependencies
  */
-import CloseOnEscape from 'components/close-on-escape';
-import Notice from 'components/notice';
+import CloseOnEscape from './components/close-on-escape';
+import Notice from './components/notice';
 import ImageEditorCanvas from './image-editor-canvas';
 import ImageEditorToolbar from './image-editor-toolbar';
 import ImageEditorButtons from './image-editor-buttons';
-import { getMimeType, url } from 'lib/media/utils';
+import { getMimeType, url } from './lib/media/utils';
 import {
 	resetImageEditorState,
 	resetAllImageEditorState,
 	setImageEditorFileInfo,
 	setImageEditorDefaultAspectRatio,
-} from 'state/ui/editor/image-editor/actions';
+} from './state/ui/editor/image-editor/actions';
 import {
 	getImageEditorFileInfo,
 	isImageEditorImageLoaded,
-} from 'state/ui/editor/image-editor/selectors';
-import { getSelectedSiteId } from 'state/ui/selectors';
-import { getSite } from 'state/sites/selectors';
-import QuerySites from 'components/data/query-sites';
-import { AspectRatios, AspectRatiosValues } from 'state/ui/editor/image-editor/constants';
+} from './state/ui/editor/image-editor/selectors';
+
+//Imports to remove
+// import { getSelectedSiteId } from './state/ui/selectors';
+// import { getSite } from './state/sites/selectors';
+// import QuerySites from './components/data/query-sites';
+
+
+import { AspectRatios, AspectRatiosValues } from './state/ui/editor/image-editor/constants';
 import { getDefaultAspectRatio } from './utils';
 
 class ImageEditor extends React.Component {
@@ -253,7 +257,7 @@ class ImageEditor extends React.Component {
 				{ noticeText && this.renderNotice() }
 
 				<CloseOnEscape onEscape={ this.onCancel } />
-				<QuerySites siteId={ siteId } />
+				{/* <QuerySites siteId={ siteId } /> */}
 
 				<figure>
 					<div className="image-editor__content">
@@ -277,15 +281,15 @@ class ImageEditor extends React.Component {
 
 export default connect(
 	( state, ownProps ) => {
-		let siteId = ownProps.siteId;
+		// let siteId = ownProps.siteId;
 
-		if ( ! siteId ) {
-			siteId = getSelectedSiteId( state );
-		}
+		// if ( ! siteId ) {
+		// 	siteId = getSelectedSiteId( state );
+		// }
 
 		return {
 			...getImageEditorFileInfo( state ),
-			site: getSite( state, siteId ),
+			// site: getSite( state, siteId ),
 			isImageLoaded: isImageEditorImageLoaded( state ),
 		};
 	},
