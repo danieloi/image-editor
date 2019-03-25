@@ -1,5 +1,14 @@
-import photon from "photon";
+/** @format */
+/**
+ * External dependencies
+ */
+import path from "path";
+import urlLib from "url";
+import { isUri } from "valid-url";
 
+/**
+ * Internal dependencies
+ */
 import resize from "../resize-image-url";
 import { MimeTypes } from "./constants";
 

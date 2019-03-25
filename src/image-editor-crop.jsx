@@ -13,7 +13,7 @@ import classNames from 'classnames';
 /**
  * Internal dependencies
  */
-import Draggable from 'components/draggable';
+import Draggable from './components/draggable';
 import {
 	getImageEditorCropBounds,
 	getImageEditorAspectRatio,

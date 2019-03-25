@@ -15,16 +15,16 @@ import classNames from 'classnames';
 /**
  * Internal dependencies
  */
-import PopoverMenu from 'components/popover/menu';
-import PopoverMenuItem from 'components/popover/menu-item';
-import { AspectRatios, MinimumImageDimensions } from 'state/ui/editor/image-editor/constants';
-import { getImageEditorAspectRatio } from 'state/ui/editor/image-editor/selectors';
+import PopoverMenu from './components/popover/menu';
+import PopoverMenuItem from './components/popover/menu-item';
+import { AspectRatios, MinimumImageDimensions } from './state/ui/editor/image-editor/constants';
+import { getImageEditorAspectRatio } from './state/ui/editor/image-editor/selectors';
 import {
 	imageEditorRotateCounterclockwise,
 	imageEditorFlip,
 	setImageEditorAspectRatio,
-} from 'state/ui/editor/image-editor/actions';
-import getImageEditorIsGreaterThanMinimumDimensions from 'state/selectors/get-image-editor-is-greater-than-minimum-dimensions';
+} from './state/ui/editor/image-editor/actions';
+import getImageEditorIsGreaterThanMinimumDimensions from './state/selectors/get-image-editor-is-greater-than-minimum-dimensions';
 
 export class ImageEditorToolbar extends Component {
 	static propTypes = {
