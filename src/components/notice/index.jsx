@@ -14,7 +14,7 @@ import Gridicon from 'gridicons';
 /**
  * Internal dependencies
  */
-import ScreenReaderText from 'components/screen-reader-text';
+import ScreenReaderText from '../screen-reader-text';
 
 export class Notice extends Component {
 	static defaultProps = {
